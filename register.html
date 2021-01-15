@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人注册</title>
+    <!-- 引入favicon图标 -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <!-- 引入我们初始化的css -->
+    <link rel="stylesheet" href="css/base.css">
+    <!-- 引入我们自己的注册页面的css -->
+    <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body>
+    <div class="w">
+        <header>
+            <div class="logo">
+                <a href="index.html"> <img src="images/logo.png" alt=""></a>
+            </div>
+        </header>
+        <div class="registerarea">
+            <h3>注册新用户
+                <div class="login">我有账号，去<a href="login.html">登陆</a></div>
+            </h3>
+            <div class="reg_form">
+                <form action="login.html" style="text-align: center">
+                    <ul>
+                        <li><label for="username">用户名：</label> <input type="text" class="inp" id="username" name="username">
+                        <li><label for="account">账号：</label> <input type="text" class="inp" id="account" name="account">
+<!--                            <span class="error" id="accountError"> <i class="error_icon"></i> 账号已被注册，请从新输入 </span></li>-->
+                        <li><label for="password1">登录密码：</label> <input type="password" class="inp" id="password1" name="password1">
+<!--                            <span class="error"> <i class="error_icon"></i> 手机号码格式不正确，请从新输入 </span></li>-->
+                        <li><label for="password2">确认密码：</label> <input type="password" class="inp" id="password2" name="password2">
+                            <span class="error" id="passwordError"></span></li>
+                        <li class="agree"><input type="checkbox" name="checkBox" id="checkBox">
+                            同意协议并注册 <a href="#">《知晓用户协议》</a>
+                        </li>
+                        <span class="error" id="checkError"></span>
+                        <li>
+                            <input type="submit" id="registerBtn" value="完成注册" class="btn">
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <div class="mod_copyright">
+                <div class="links">
+                    <a href="#">关于我们</a> | <a href="#">联系我们</a> | 联系客服 | 商家入驻 | 营销中心 | 手机品优购 | 友情链接 | 销售联盟 | 品优购社区 |
+                    品优购公益 | English Site | Contact U
+                </div>
+                <div class="copyright">
+                    地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100 邮箱: zhanghj+itcast.cn <br>
+                    京ICP备08001421号京公网安备110108007702
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
+<script>
+    window.onload=function () {
+        let password1=document.querySelector("#password1");
+        let password2=document.querySelector("#password2");
+        let registerBtn=document.querySelector("#registerBtn");
+        let checkError=document.querySelector("#checkError");
+        let msg=document.querySelector("#passwordError");
+        registerBtn.addEventListener("click",function () {
+            let formData=new FormData(this.form);
+            if(formData.get("checkBox")==null) {
+                event.preventDefault();
+                checkError.innerHTML="<i class=\"error_icon\"></i> 请勾选《知晓用户协议》";
+                setTimeout(function () {
+                    checkError.innerHTML = "";
+                }, 2000);
+            }
+            if (password1.value !== password2.value) {
+                msg.innerHTML = "<i class=\"error_icon\"></i> 两次输入的密码不一致，请重新输入";
+                setTimeout(function () {
+                    msg.innerHTML = "";
+                }, 2000);
+                this.form.reset();
+                event.preventDefault();
+            } else {
+                let user = {};
+                for (let entry of formData.entries()) {
+                    user[entry[0]] = entry[1];
+                }
+                localStorage.setItem("user", JSON.stringify(user));
+            }
+        },false)
+    }
+</script>
